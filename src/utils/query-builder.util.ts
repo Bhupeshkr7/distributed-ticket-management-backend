@@ -1,5 +1,6 @@
 import mongoose, { Document, Model } from "mongoose";
-import type { FilterQuery } from "mongoose";
+
+type FilterQuery<T> = mongoose.QueryFilter<T>;
 
 interface QueryOptions {
   search?: string;
