@@ -1,0 +1,14 @@
+Schema Design:
+-> embed vs reference in mongoDB?
+Ans:-
+In MongoDB, referencing means storing the related document’s ID, while embedding means storing the complete object inside the parent document.
+Referencing is used when data is large or independent, and embedding is used when data is tightly coupled and frequently accessed together.
+User {
+  _id: "u1",
+  name: "Bhupesh",
+  orderIds: ["o1", "o2"]
+}
+Order {
+  _id: "o1",
+  amount: 500
+}

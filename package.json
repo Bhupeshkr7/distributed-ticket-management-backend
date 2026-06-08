@@ -1,0 +1,59 @@
+{
+  "name": "distributed-ticket-system",
+  "version": "1.0.0",
+  "description": "High-concurrency distributed ticket booking system with seat locking, payment integration, Redis caching, and microservice-ready architecture.",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --clear src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "create-service": "ts-node-dev --transpile-only scripts/createService.ts",
+    "remove-service": "ts-node-dev --transpile-only scripts/removeService.ts"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "express",
+    "mongodb",
+    "redis",
+    "microservices",
+    "system-design",
+    "booking-system",
+    "distributed-system"
+  ],
+  "author": "Bhupesh Kumar",
+  "license": "ISC",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bullmq": "^5.74.1",
+    "chalk": "^5.6.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "ioredis": "^5.10.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.3",
+    "morgan": "^1.10.1",
+    "nanoid": "^5.1.7",
+    "nodemailer": "^8.0.4",
+    "razorpay": "^2.9.6",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^25.5.0",
+    "@types/nodemailer": "^8.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.2"
+  }
+}
