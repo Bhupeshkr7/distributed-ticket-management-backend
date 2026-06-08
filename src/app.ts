@@ -40,8 +40,33 @@ app.use((req, res, next) => {
   expres.json()(req, res, next);
 });
 
-app.get("/health", (req, res) => {
-  res.status(200).json({ status: "ok" });
+import mongoose from "mongoose";
+import redisClient from "./config/redis.config";
+
+app.get("/health", async (req, res) => {
+  try {
+    const isRedisConnected = redisClient.status === "ready";
+    const isMongoConnected = mongoose.connection.readyState === 1;
+
+    if (isRedisConnected && isMongoConnected) {
+      res.status(200).json({ 
+        status: "ok", 
+        services: { redis: "up", mongo: "up" },
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(503).json({
+        status: "error",
+        services: {
+          redis: isRedisConnected ? "up" : "down",
+          mongo: isMongoConnected ? "up" : "down"
+        },
+        timestamp: new Date().toISOString()
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ status: "error", message: "Health check failed" });
+  }
 });
 app.use("/api/users", userRouter);
 app.use("/api/venues", venueRouter);

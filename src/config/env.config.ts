@@ -6,8 +6,7 @@ export const env = {
   PORT: Number(process.env.PORT) || 5000,
 
   MONGO_URI:
-    process.env.MONGO_URI ||
-    "mongodb://localhost:27017/distributed-movie-ticket",
+    "mongodb+srv://bkbhaskar858186_db_user:vy1hMhBgmkJvNhpB@ticket-booking.uofpxed.mongodb.net",
 
   ACCESS_TOKEN_SECRET:
     process.env.ACCESS_TOKEN_SECRET ||
