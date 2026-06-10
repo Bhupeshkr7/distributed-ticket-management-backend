@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Logger from "../utils/logge.util";
 
-
+//fu5p8sOBZXDOSAfh
 const logger = new Logger('DBConfig');
 export const connectDB = async (mongoURI: string) => {
   try {
