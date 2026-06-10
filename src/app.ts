@@ -5,6 +5,8 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { globalErrorMiddleware } from "./middlewares/global.error.middleware";
 import { env } from "./config/env.config";
+import mongoose from "mongoose";
+import redisClient from "./config/redis.config";
 import { userRouter } from "./modules/user/user.routes";
 import { venueRouter } from "./modules/venue/venue.routes";
 import { showRouter } from "./modules/show/show.routes";
@@ -40,33 +42,13 @@ app.use((req, res, next) => {
   expres.json()(req, res, next);
 });
 
-import mongoose from "mongoose";
-import redisClient from "./config/redis.config";
-
-app.get("/health", async (req, res) => {
-  try {
-    const isRedisConnected = redisClient.status === "ready";
-    const isMongoConnected = mongoose.connection.readyState === 1;
-
-    if (isRedisConnected && isMongoConnected) {
-      res.status(200).json({ 
-        status: "ok", 
-        services: { redis: "up", mongo: "up" },
-        timestamp: new Date().toISOString()
-      });
-    } else {
-      res.status(503).json({
-        status: "error",
-        services: {
-          redis: isRedisConnected ? "up" : "down",
-          mongo: isMongoConnected ? "up" : "down"
-        },
-        timestamp: new Date().toISOString()
-      });
-    }
-  } catch (error) {
-    res.status(500).json({ status: "error", message: "Health check failed" });
-  }
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    currentTime: new Date().toISOString(),
+    mongoDb: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+    redis: redisClient.status === "ready" ? "connected" : "disconnected",
+  });
 });
 app.use("/api/users", userRouter);
 app.use("/api/venues", venueRouter);

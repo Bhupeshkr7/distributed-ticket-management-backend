@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 import { env } from "../config/env.config";
-import crypto from "crypto";
+import { nanoid } from "nanoid";
 
 export const generateAccessToken = (userId: string) => {
   const options: SignOptions = {
@@ -15,6 +15,5 @@ export const generateAccessToken = (userId: string) => {
 };
 
 export const generateRefreshToken = () => {
-  // 32 bytes = 64 hex characters, equivalent to nanoid(64)
-  return crypto.randomBytes(32).toString('hex');
+  return nanoid(64);
 }

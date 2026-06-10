@@ -1,11 +1,4 @@
-// Inline ANSI helpers — avoids chalk's ESM-only v5+ incompatibility with CJS builds
-const ANSI = {
-  red: (s: string) => `\x1b[31m${s}\x1b[0m`,
-  yellow: (s: string) => `\x1b[33m${s}\x1b[0m`,
-  green: (s: string) => `\x1b[32m${s}\x1b[0m`,
-  blue: (s: string) => `\x1b[34m${s}\x1b[0m`,
-  white: (s: string) => `\x1b[37m${s}\x1b[0m`,
-};
+import chalk from 'chalk';
 
 type LogLevel = 'error' | 'warn' | 'info' | 'debug';
 
@@ -30,18 +23,18 @@ class Logger {
     return LOG_LEVEL_PRIORITY[level] <= LOG_LEVEL_PRIORITY[CURRENT_LEVEL];
   }
 
-  private getColor(level: LogLevel): (s: string) => string {
+  private getColor(level: LogLevel) {
     switch (level) {
       case 'error':
-        return ANSI.red;
+        return chalk.red;
       case 'warn':
-        return ANSI.yellow;
+        return chalk.yellow;
       case 'info':
-        return ANSI.green;
+        return chalk.green;
       case 'debug':
-        return ANSI.blue;
+        return chalk.blue;
       default:
-        return ANSI.white;
+        return chalk.white;
     }
   }
 
